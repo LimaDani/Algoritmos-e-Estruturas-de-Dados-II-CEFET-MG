@@ -1,57 +1,43 @@
 /*----------------------------------------------------------
-*	CENTRO FEDERAL DE EDUCACAO TECNOLOGICA DE MINAS GERAIS
-*	LABORATORIO DE ALGORITMOS E ESTRUTURAS DE DADOS II
-*   TRABALHO PRATICO III  
-*   1.2 HEAP BINARIO  
+* CENTRO FEDERAL DE EDUCACAO TECNOLOGICA DE MINAS GERAIS
+* LABORATORIO DE ALGORITMOS E ESTRUTURAS DE DADOS II  
+* HEAP BINARIO  
 *-----------------------------------------------------------*/
 #include "binaryHeap.hpp"
 
-Heap::Heap(int cap)
-{
-    size = 0;
-    capacity = cap;
+Heap::Heap(int cap){
+	size = 0;
+	capacity = cap;
     harr = new int[cap];
 }
  
-
-void Heap::insert(int n)
-{
-    if (size == capacity)
-    {
-        cout << "\n Overflow \n";
+void Heap::insert(int n){
+    if (size == capacity){
+    	cout << "\n Overflow \n";
         return;
     }
-
-    size++;
+	size++;
     int i = size - 1;
     harr[i] = n;
- 
-    while (i != 0 && harr[pai(i)] > harr[i])
-    {
-       swap(&harr[i], &harr[pai(i)]);
-       i = pai(i);
+	while (i != 0 && harr[pai(i)] > harr[i]){
+		swap(&harr[i], &harr[pai(i)]);
+        i = pai(i);
     }
 }
  
-
-void Heap::decrease(int i, int new_val)
-{
-    harr[i] = new_val;
-    while (i != 0 && harr[pai(i)] > harr[i])
-    {
-       swap(&harr[i], &harr[pai(i)]);
-       i = pai(i);
+void Heap::decrease(int i, int new_val){
+	harr[i] = new_val;
+    while (i != 0 && harr[pai(i)] > harr[i]){
+    	swap(&harr[i], &harr[pai(i)]);
+    	i = pai(i);
     }
 }
- 
 
-int Heap::extractMin()
-{
+int Heap::extractMin(){
     if (size <= 0)
-        return INT_MAX;
-    if (size == 1)
-    {
-        size--;
+    	return INT_MAX;
+    if (size == 1){
+    	size--;
         return harr[0];
     }
  
@@ -63,38 +49,30 @@ int Heap::extractMin()
     return root;
 }
  
-
-void Heap::remove(int i)
-{
+void Heap::remove(int i){
     decrease(i, INT_MIN);
     extractMin();
 }
  
-
-void Heap::MinHeapify(int i)
-{
-    int l = left(i);
+void Heap::MinHeapify(int i){
+	int l = left(i);
     int r = right(i);
     int menor = i;
     if (l < size && harr[l] < harr[i])
-        menor = l;
+    	menor = l;
     if (r < size && harr[r] < harr[menor])
         menor = r;
-    if (menor != i)
-    {
+    if (menor != i){
         swap(&harr[i], &harr[menor]);
         MinHeapify(menor);
     }
 }
  
-
-void Heap::swap(int *x, int *y)
-{
+void Heap::swap(int *x, int *y){
     int temp = *x;
     *x = *y;
     *y = temp;
 }
-
  
 int main()
 {
